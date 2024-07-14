@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeSculptor AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="wrapper">
+        <main>
+            <section class="hero">
+                <h1>CodeSculptor AI</h1>
+                <h2>An AI-Powered Assistant for Your Coding Needs</h2>
+                <h3>By Amogh Upadhyaya</h3>
+            </section>
+            <section class="features">
+                <div class="feature">
+                    <h4>Debugger</h4>
+                    <p>Find and fix bugs in your code effortlessly.</p>
+                    <button onclick="location.href='/debugger'">Try Now</button>
+                </div>
+                <div class="feature">
+                    <h4>Code Commentor</h4>
+                    <p>Add intelligent comments to your code.</p>
+                    <button onclick="location.href='/code_commentor'">Try Now</button>
+                </div>
+                <div class="feature">
+                    <h4>Code Refactor</h4>
+                    <p>Refactor your code for better performance and readability.</p>
+                    <button onclick="location.href='/code_refactor'">Try Now</button>
+                </div>
+                <div class="feature">
+                    <h4>Documentation Generator</h4>
+                    <p>Generate comprehensive documentation for your projects.</p>
+                    <button onclick="location.href='/documentation_generator'">Try Now</button>
+                </div>
+                <div class="feature">
+                    <h4>Test Case Generator</h4>
+                    <p>Create test cases to ensure your code works as expected.</p>
+                    <button onclick="location.href='/test_case_generator'">Try Now</button>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2024 CodeSculptor AI. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

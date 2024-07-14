@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Refactor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function showWorkingMessage() {
+            document.getElementById("working").style.display = "block";
+        }
+
+        document.addEventListener('input', function (event) {
+            if (event.target.tagName.toLowerCase() !== 'textarea') return;
+            autoExpand(event.target);
+        }, false);
+
+        function autoExpand(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = (textarea.scrollHeight) + 'px';
+        }
+
+        function downloadRefactoredCode() {
+            const code = document.getElementById('refactoredCode').innerText;
+            const fileName = document.getElementById('fileName').value;
+
+            if (!fileName) {
+                alert('Please enter a file name.');
+                return;
+            }
+
+            const blob = new Blob([code], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</head>
+<body>
+    <button class="home-button" onclick="location.href='/'">&#8592; Home</button>
+    <main>
+        <section class="hero">
+            <h1>Code Refactor</h1>
+            <h2>Automatically Improves the Structure and Readability of Your Code!</h2>
+        </section>
+        <section class="form-section">
+            <form method="post" onsubmit="showWorkingMessage()">
+                <textarea name="code" placeholder="Enter your code here..."></textarea>
+                <button type="submit">Submit</button>
+            </form>
+            <div id="working" class="ellipsis" style="display:none;">Working<span>.</span><span>.</span><span>.</span></div>
+            {% if refactored_code %}
+            <h2>Refactored Code:</h2>
+            <pre id="refactoredCode">{{ refactored_code }}</pre>
+            <input type="text" id="fileName" placeholder="Enter file name with extension (e.g., code.py)" class="file-name-input">
+            <button onclick="downloadRefactoredCode()">Download Code</button>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,210 @@
+/* style.css */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e0e0e0; 
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+header, footer {
+    background-color: #007BFF;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.hero {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #007BFF;
+    color: white;
+}
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+.feature {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 15px;
+    padding: 20px;
+    width: 300px;
+    height: 200px;
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.feature h4 {
+    margin: 0;
+}
+
+.feature p {
+    font-size: 14px;
+    color: #666;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feature button, .form-section button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.feature button:hover, .form-section button:hover {
+    background-color: #0056b3;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+}
+
+textarea, input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px; /* Increased font size for better readability */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none; /* Disable manual resizing */
+    overflow: hidden; /* Hide scroll bars */
+    font-family: 'Helvetica', 'Arial', sans-serif; /* Set font to Helvetica or Arial */
+    box-sizing: border-box; /* Ensure padding is included in width/height */
+}
+
+textarea {
+    min-height: 150px; /* Set a minimum height */
+}
+
+input::placeholder, textarea::placeholder {
+    color: #888; /* Placeholder text color */
+    font-style: italic; /* Placeholder text style */
+}
+
+.home-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.home-button:hover {
+    background-color: #0056b3;
+}
+
+pre {
+    background-color: #e8e8e8;
+    padding: 10px;
+    border-radius: 4px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+#working {
+    font-size: 18px;
+    color: #007BFF;
+    text-align: center;
+    margin-top: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #007BFF;
+    color: white;
+    margin-top: auto;
+}
+
+.ellipsis span {
+    animation: ellipsis 1.5s infinite;
+}
+
+.ellipsis span:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.ellipsis span:nth-child(3) {
+    animation-delay: 1s;
+}
+
+@keyframes ellipsis {
+    0%, 20% {
+        color: rgba(0, 0, 0, 0);
+    }
+    20%, 100% {
+        color: #007BFF;
+    }
+}
+
+.file-name-input {
+    width: 200px;
+    margin: 10px auto;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: block;
+    text-align: center;
+}
+
+.file-name-input {
+    width: 200px;
+    margin: 10px auto;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: block;
+    text-align: center;
+}
+
+
