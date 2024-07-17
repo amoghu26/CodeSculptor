@@ -9,7 +9,7 @@ def refactor_code(code, language):
         model="gpt-4",
         messages=[
             {"role": "system", "content": f"You are a helpful assistant that refactors {language} code."},
-            {"role": "user", "content": prompt}
+            {"role": "user", "content": f"The output should be ONLY code, no explanation or other words: {prompt}"}
         ],
         max_tokens=1500,
         n=1,
