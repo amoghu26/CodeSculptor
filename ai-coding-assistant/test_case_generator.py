@@ -1,7 +1,7 @@
 import ast
 import openai
 
-openai.api_key = "KEY"
+openai.api_key = "key"
 
 class CodeAnalyzer(ast.NodeVisitor):
     def __init__(self):
@@ -31,9 +31,9 @@ def generate_test_cases(functions):
         test_cases[func.name] = edge_cases
     return test_cases
 
-def openai_generate_test_cases(code):
+def openai_generate_test_cases(code, language):
     prompt = (
-        "Analyze the following code and generate test cases that fully test the limits of the program:\n\n"
+        f"Analyze the following {language} code and generate test cases that fully test the limits of the program:\n\n"
         f"{code}\n\n"
         "Identify edge cases and generate relevant test cases."
     )
@@ -41,7 +41,7 @@ def openai_generate_test_cases(code):
     response = openai.ChatCompletion.create(
         model="gpt-4",
         messages=[
-            {"role": "system", "content": "You are a highly skilled assistant that helps with generating test cases for code."},
+            {"role": "system", "content": f"You are a highly skilled assistant that helps with generating test cases for {language} code."},
             {"role": "user", "content": prompt}
         ],
         max_tokens=500
@@ -67,6 +67,6 @@ if __name__ == "__main__":
         for case in cases:
             print(f"  Test Case: {case}")
 
-    generated_test_cases = openai_generate_test_cases(code)
+    generated_test_cases = openai_generate_test_cases(code, 'python')  # Default to python for command-line usage
     print("\nGenerated Test Cases:")
     print(generated_test_cases)

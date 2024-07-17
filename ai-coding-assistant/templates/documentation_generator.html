@@ -19,24 +19,67 @@
             textarea.style.height = 'auto';
             textarea.style.height = (textarea.scrollHeight) + 'px';
         }
+
+        function copyToClipboard() {
+            const textToCopy = document.getElementById("generated-documentation").innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert("Copied to clipboard!");
+            }).catch(err => {
+                console.error("Failed to copy text: ", err);
+            });
+        }
+
+        function pasteFromClipboard() {
+            navigator.clipboard.readText().then(text => {
+                document.querySelector('textarea[name="code"]').value = text;
+                autoExpand(document.querySelector('textarea[name="code"]'));
+            }).catch(err => {
+                console.error("Failed to read text: ", err);
+            });
+        }
+
+        function selectLanguage(language) {
+            document.getElementById("language").value = language;
+            const buttons = document.querySelectorAll(".language-button");
+            buttons.forEach(button => {
+                if (button.dataset.language === language) {
+                    button.classList.add("selected");
+                } else {
+                    button.classList.remove("selected");
+                }
+            });
+        }
     </script>
 </head>
 <body>
     <button class="home-button" onclick="location.href='/'">&#8592; Home</button>
     <main>
+        <div class="language-buttons">
+            <button class="language-button selected" data-language="python" onclick="selectLanguage('python')">Python</button>
+            <button class="language-button" data-language="java" onclick="selectLanguage('java')">Java</button>
+            <button class="language-button" data-language="javascript" onclick="selectLanguage('javascript')">JavaScript</button>
+            <button class="language-button" data-language="cpp" onclick="selectLanguage('cpp')">C++</button>
+        </div>
         <section class="hero">
             <h1>Documentation Generator</h1>
             <h2>Generates Documentation for Your Code Based on Comments and Headers!</h2>
         </section>
         <section class="form-section">
             <form method="post" onsubmit="showWorkingMessage()">
+                <input type="hidden" id="language" name="language" value="python">
                 <textarea name="code" placeholder="Enter your code here..."></textarea>
+                <button type="button" class="paste-button" onclick="pasteFromClipboard()">Paste from Clipboard</button>
                 <button type="submit">Submit</button>
             </form>
             <div id="working" class="ellipsis" style="display:none;">Working<span>.</span><span>.</span><span>.</span></div>
             {% if documentation %}
-            <h2>Generated Documentation:</h2>
-            <pre>{{ documentation }}</pre>
+            <div class="code-section">
+                <h2>Generated Documentation:</h2>
+                <pre id="generated-documentation">{{ documentation }}</pre>
+                <div class="button-container">
+                    <button class="copy-button" onclick="copyToClipboard()">Copy to Clipboard</button>
+                </div>
+            </div>
             {% endif %}
         </section>
     </main>

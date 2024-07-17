@@ -1,14 +1,15 @@
 import openai
+import os
 
-openai.api_key = "KEY"
+openai.api_key = "key"
 
-def generate_documentation(code):
+def generate_documentation(code, language):
     messages = [
-        {"role": "system", "content": "You are a professional technical writer."},
+        {"role": "system", "content": f"You are a professional technical writer specializing in {language} documentation."},
         {"role": "user", "content": (
-            "Given the following Python code, generate comprehensive documentation. "
+            f"Given the following {language} code, generate comprehensive documentation. "
             "The documentation should include a high-level module overview, detailed function descriptions, "
-            "parameters, return values, and any additional notes. Make sure to follow Python's standard documentation style.\n\n"
+            "parameters, return values, and any additional notes. Make sure to follow the standard documentation style for {language}.\n\n"
             f"Here is the code:\n\n"
             f"{code}\n\n"
             "Comprehensive Documentation:"
@@ -46,7 +47,7 @@ def main():
     
     code_text = "\n".join(code_lines)
     
-    documentation = generate_documentation(code_text)
+    documentation = generate_documentation(code_text, 'python')  # Default to python for command-line usage
     
     print("\nGenerated Documentation:")
     print(documentation)

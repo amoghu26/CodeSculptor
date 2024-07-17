@@ -16,7 +16,8 @@ def commentor():
     if request.method == 'POST':
         code = request.form['code']
         instructions = request.form['instructions']
-        commented_code = code_commentor.generate_commented_code(code, instructions)
+        language = request.form['language']
+        commented_code = code_commentor.generate_commented_code(code, instructions, language)
         return render_template('code_commentor.html', commented_code=commented_code)
     return render_template('code_commentor.html')
 
@@ -24,23 +25,25 @@ def commentor():
 def refactor():
     if request.method == 'POST':
         code = request.form['code']
-        refactored_code = code_refactor.refactor_code(code)
-        return render_template('code_refactor.html', refactored_code=refactored_code)
+        language = request.form['language']
+        refactored_code, explanation = code_refactor.refactor_code(code, language)
+        return render_template('code_refactor.html', refactored_code=refactored_code, explanation=explanation)
     return render_template('code_refactor.html')
 
 @app.route('/debugger', methods=['GET', 'POST'])
 def debug():
     if request.method == 'POST':
         code = request.form['code']
-        syntax_error = debugger.identify_syntax_errors(code)
+        language = request.form['language']
+        syntax_error = debugger.identify_syntax_errors(code, language)
         if syntax_error:
             error_message = f"Syntax error(s) encountered: {syntax_error}"
-            response = debugger.get_openai_fix(error_message, code)
+            response = debugger.get_openai_fix(error_message, code, language)
         else:
-            runtime_error = debugger.identify_runtime_errors(code)
+            runtime_error = debugger.identify_runtime_errors(code, language)
             if runtime_error:
                 error_message = runtime_error
-                response = debugger.get_openai_fix(error_message, code)
+                response = debugger.get_openai_fix(error_message, code, language)
             else:
                 response = "No errors found."
         fixed_code, explanation = debugger.parse_openai_response(response)
@@ -51,7 +54,8 @@ def debug():
 def doc_gen():
     if request.method == 'POST':
         code = request.form['code']
-        documentation = documentation_generator.generate_documentation(code)
+        language = request.form['language']
+        documentation = documentation_generator.generate_documentation(code, language)
         return render_template('documentation_generator.html', documentation=documentation)
     return render_template('documentation_generator.html')
 
@@ -59,7 +63,8 @@ def doc_gen():
 def test_gen():
     if request.method == 'POST':
         code = request.form['code']
-        generated_test_cases = test_case_generator.openai_generate_test_cases(code)
+        language = request.form['language']
+        generated_test_cases = test_case_generator.openai_generate_test_cases(code, language)
         return render_template('test_case_generator.html', generated_test_cases=generated_test_cases)
     return render_template('test_case_generator.html')
 

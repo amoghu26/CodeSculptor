@@ -1,55 +1,36 @@
 import openai
-import os
 
-openai.api_key = "KEY"
+openai.api_key = "key"
 
-def refactor_code(code):
+def refactor_code(code, language):
+    prompt = f"Refactor the following {language} code to enhance its readability, structure, and efficiency without changing its current functionality:\n\n{code}\n\nRefactored code:"
+    
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4",
         messages=[
-            {
-                "role": "system",
-                "content": "You are a helpful assistant that refactors code to improve its structure and readability without changing its functionality."
-            },
-            {
-                "role": "user",
-                "content": f"Refactor the following code to improve its structure and readability without changing its functionality:\n\n{code}"
-            }
+            {"role": "system", "content": f"You are a helpful assistant that refactors {language} code."},
+            {"role": "user", "content": prompt}
         ],
-        max_tokens=1024,
+        max_tokens=1500,
         n=1,
         stop=None,
         temperature=0.5,
     )
+    
     refactored_code = response['choices'][0]['message']['content'].strip()
-    return refactored_code
-
-def read_code_from_file(file_path):
-    with open(file_path, 'r') as file:
-        code = file.read()
-    return code
-
-def write_code_to_file(file_path, code):
-    with open(file_path, 'w') as file:
-        file.write(code)
-
-def main():
-    print("Enter the code you want to refactor (end with an empty line):")
-    code_lines = []
-    while True:
-        line = input()
-        if line == "":
-            break
-        code_lines.append(line)
+    explanation_prompt = f"Explain the changes made to the following {language} code:\n\n{code}\n\nRefactored code:\n\n{refactored_code}\n\nExplanation:"
     
-    code_text = "\n".join(code_lines)
+    explanation_response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=[
+            {"role": "system", "content": f"You are a helpful assistant that explains {language} code changes."},
+            {"role": "user", "content": explanation_prompt}
+        ],
+        max_tokens=1500,
+        n=1,
+        stop=None,
+        temperature=0.5,
+    )
     
-    refactored_code = refactor_code(code_text)
-    
-    print("\nOriginal Code:")
-    print(code_text)
-    print("\nRefactored Code:")
-    print(refactored_code)
-
-if __name__ == "__main__":
-    main()
+    explanation = explanation_response['choices'][0]['message']['content'].strip()
+    return refactored_code, explanation
